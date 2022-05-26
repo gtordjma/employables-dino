@@ -13,9 +13,9 @@ class PlayScene extends Phaser.Scene {
     this.respawnTime = 0;
     this.score = 0;
 
-    this.jumpSound = this.sound.add('jump', {volume: 0.2});
-    this.hitSound = this.sound.add('hit', {volume: 0.2});
-    this.reachSound = this.sound.add('reach', {volume: 0.2});
+    this.jumpSound = this.sound.add('jump', { volume: 0.2 });
+    this.hitSound = this.sound.add('hit', { volume: 0.2 });
+    this.reachSound = this.sound.add('reach', { volume: 0.2 });
 
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, height, 88, 26, 'ground').setOrigin(0, 1)
@@ -26,27 +26,27 @@ class PlayScene extends Phaser.Scene {
       .setDepth(1)
       .setOrigin(0, 1);
 
-    this.scoreText = this.add.text(width, 0, "00000", {fill: "#535353", font: '900 35px Courier', resolution: 5})
+    this.scoreText = this.add.text(width, 0, "00000", { fill: "#535353", font: '900 35px Courier', resolution: 5 })
       .setOrigin(1, 0)
       .setAlpha(0);
 
-    this.highScoreText = this.add.text(0, 0, "00000", {fill: "#535353", font: '900 35px Courier', resolution: 5})
+    this.highScoreText = this.add.text(0, 0, "00000", { fill: "#535353", font: '900 35px Courier', resolution: 5 })
       .setOrigin(1, 0)
       .setAlpha(0);
 
-      this.environment = this.add.group();
-      this.environment.addMultiple([
-        this.add.image(width / 2, 170, 'cloud'),
-        this.add.image(width - 80, 80, 'cloud'),
-        this.add.image((width / 1.3), 100, 'cloud')
-      ]);
-      this.environment.setAlpha(0);
+    this.environment = this.add.group();
+    this.environment.addMultiple([
+      this.add.image(width / 2, 170, 'cloud'),
+      this.add.image(width - 80, 80, 'cloud'),
+      this.add.image((width / 1.3), 100, 'cloud')
+    ]);
+    this.environment.setAlpha(0);
 
     this.gameOverScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(0)
     this.gameOverText = this.add.image(0, 0, 'game-over');
     this.restart = this.add.image(0, 80, 'restart').setInteractive();
     this.gameOverScreen.add([
-      this.gameOverText,  this.restart
+      this.gameOverText, this.restart
     ])
 
     this.obsticles = this.physics.add.group();
@@ -90,8 +90,8 @@ class PlayScene extends Phaser.Scene {
 
       this.startTrigger.disableBody(true, true);
 
-      const startEvent =  this.time.addEvent({
-        delay: 1000/60,
+      const startEvent = this.time.addEvent({
+        delay: 1000 / 60,
         loop: true,
         callbackScope: this,
         callback: () => {
@@ -118,21 +118,21 @@ class PlayScene extends Phaser.Scene {
   initAnims() {
     this.anims.create({
       key: 'dino-run',
-      frames: this.anims.generateFrameNumbers('dino', {start: 2, end: 3}),
+      frames: this.anims.generateFrameNumbers('dino', { start: 2, end: 3 }),
       frameRate: 10,
       repeat: -1
     })
 
     this.anims.create({
       key: 'dino-down-anim',
-      frames: this.anims.generateFrameNumbers('dino-down', {start: 0, end: 1}),
+      frames: this.anims.generateFrameNumbers('dino-down', { start: 0, end: 1 }),
       frameRate: 10,
       repeat: -1
     })
 
     this.anims.create({
       key: 'enemy-dino-fly',
-      frames: this.anims.generateFrameNumbers('enemy-bird', {start: 0, end: 1}),
+      frames: this.anims.generateFrameNumbers('enemy-bird', { start: 0, end: 1 }),
       frameRate: 6,
       repeat: -1
     })
@@ -140,7 +140,7 @@ class PlayScene extends Phaser.Scene {
 
   handleScore() {
     this.time.addEvent({
-      delay: 1000/10,
+      delay: 1000 / 10,
       loop: true,
       callbackScope: this,
       callback: () => {
@@ -209,21 +209,21 @@ class PlayScene extends Phaser.Scene {
   }
 
   placeObsticle() {
-    const obsticleNum = Math.floor(Math.random() * 7) + 1;
+    const obsticleNum = Math.floor(Math.random() * 8) + 1;
     const distance = Phaser.Math.Between(600, 900);
 
     let obsticle;
-    if (obsticleNum > 6) {
+    if (obsticleNum > 7) {
       const enemyHeight = [20, 50];
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], `enemy-bird`)
         .setOrigin(0, 1)
-        obsticle.play('enemy-dino-fly', 1);
+      obsticle.play('enemy-dino-fly', 1);
       obsticle.body.height = obsticle.body.height / 1.5;
     } else {
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height, `obsticle-${obsticleNum}`)
         .setOrigin(0, 1);
 
-     obsticle.body.offset.y = +10;
+      obsticle.body.offset.y = +10;
     }
 
     obsticle.setImmovable();

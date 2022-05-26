@@ -25,7 +25,6 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 } else {
   // false for not mobile device
   new Phaser.Game(config);
-  document.getElementsByClassName("mobile")[0].style.display = 'none';
 
 }
 

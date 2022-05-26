@@ -19,4 +19,11 @@ const config = {
   scene: [PreloadScene, PlayScene]
 };
 
-new Phaser.Game(config);
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  // true for mobile device
+} else {
+  // false for not mobile device
+  new Phaser.Game(config);
+}
+
+
